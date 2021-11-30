@@ -1,5 +1,5 @@
 vi cost, pred, used;
-int BFS (const vector<vi>& g, int start, int finish) {
+int BFS (const vvi& g, int start, int finish) {
 	int size = sz(g);
 	cost.resize(size, INF);
 	pred.resize(size);

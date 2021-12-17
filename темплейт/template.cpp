@@ -87,13 +87,6 @@ void _dbg(const char *_s, T _h, Ts... _t) {
 #define dbg(...)
 #endif
 
-int gcd(int a, int b) {
-    while (a != 0) {
-        b %= a;
-        swap(a, b);
-    }
-    return a + b;
-}
 
 int binpow(int a, int n) {
     int result = 1;
@@ -116,13 +109,14 @@ const int SQRT = 350;
 const int LOG = 21;
 
 void solve() {
-
+    
 }
+
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    
+
     return 0;
 }

@@ -16,6 +16,7 @@ vector<Edge> bridges;
 void dfs(int v, int p) {
     h[v] = h[p] + 1;
     hup[v] = h[v];
+	used[v] = true;
     for (auto & to : g[v]) {
         if (to == p) {
             continue;

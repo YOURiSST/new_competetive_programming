@@ -8,19 +8,33 @@ struct DSU {
         pred.resize(n);
         iota(all(pred), 0);
     }
-    
+    /*
     int find_leader(int v) {
         while (pred[v] != v) {
             v = pred[v];
         }
         return v;
     }
-    
+    */
+	
 	/*
     int find_leader(int v) {
         return v == pred[v] ? v : (pred[v] = find_leader(pred[v]));
     }
 	*/
+	
+	
+	int find_leader(int v) {
+		if (v == pred[v]) {
+			return v;
+		} else {
+			int leader = find_leader(pred[v]);
+			pred[v] = leader;
+			return pred[v];
+		}
+	}
+	
+	
     
     bool join(int u, int v) {
         if ((u = find_leader(u)) == (v = find_leader(v))) {

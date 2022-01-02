@@ -27,8 +27,9 @@ struct Fenwick {
 };
 
 
-
 //////////
+
+
 struct Fenwick {
     int n;
     vi t;

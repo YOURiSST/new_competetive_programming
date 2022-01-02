@@ -73,7 +73,7 @@ int main() {
     vector<Point> stack;
     stack.eb(p[0]);
     stack.eb(p[1]);
-
+	
     for (ll i = 2; i < n; ++i) {
         Point new_p = p[i];
         while (stack.size() >= 2) {
@@ -84,7 +84,7 @@ int main() {
             if (cross(v1, v2) > 0) {
                 break;
             } else {
-                stack.pop_back();
+                stack.pop_back()		;
             }
         }
         stack.eb(new_p);

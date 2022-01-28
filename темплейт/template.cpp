@@ -12,6 +12,9 @@
 #include <map>
 #include <chrono>
 #include <random>
+#include <bitset>
+#include <unordered_set>
+#include <unordered_map>
 
 
 #define sz(a) ((int)((a).size()))
@@ -34,6 +37,7 @@
 #define rall(a) (a).rbegin(), (a).rend()
 typedef long long ll;
 typedef long double ld;
+typedef unsigned long long ull;
 using namespace std;
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 mt19937_64 rng_ll(chrono::steady_clock::now().time_since_epoch().count());
@@ -99,9 +103,10 @@ int binpow(int a, int n) {
     return result;
 }
 
+//#define int long long
 int const INF = 2 * 1e9;
 ll const LINF = 1e18;
-const int MAXN = 100 * 1000; // 1e5
+const int MAXN = 1001; // 1e3 + 1
 //ll const CONST = 9223372036854775807;
 long double const PI = 3.14159265358979323846;
 //int const MAXN = 101;
@@ -109,14 +114,12 @@ const int SQRT = 350;
 const int LOG = 21;
 
 void solve() {
-    
+
 }
-
-
-int main() {
+signed main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-
+    
     return 0;
 }

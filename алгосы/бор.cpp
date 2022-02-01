@@ -1,5 +1,5 @@
 
-struct Node() {
+struct Node {
 	bool term;
 	int go[26];
 	int cnt;
@@ -12,7 +12,7 @@ struct Node() {
 	}
 };
 
-struct Trie() {
+struct Trie {
 	vector<Node> nodes;
 	Trie() {
 		nodes.eb(Node());

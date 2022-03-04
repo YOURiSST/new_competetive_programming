@@ -1,4 +1,4 @@
-struct SQRT {
+	struct SQRT {
     int n;
     vector<int> a;
     vector<int> sum_block;

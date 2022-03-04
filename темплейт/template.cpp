@@ -36,7 +36,7 @@
 #define rall(a) (a).rbegin(), (a).rend()
 #define Time (double)clock() / CLOCKS_PER_SEC
 #define filein(FILE) freopen(FILE, "r", stdin)
-#define filout(FILE) freopen(FILE, "w", stdout)
+#define fileout(FILE) freopen(FILE, "w", stdout)
 typedef long long ll;
 typedef long double ld;
 typedef unsigned long long ull;
@@ -108,12 +108,13 @@ int binpow(int a, int n) {
 //#define int long long
 int const INF = 2 * 1e9;
 ll const LINF = 1e18;
-const int MAXN = 100 * 1000; // 1e5 + 0
+const int MAXN = 4 * 100 * 1001; // 1e5 + 0
 //ll const CONST = 9223372036854775807;
 long double const PI = 3.14159265358979323846;
 //int const MAXN = 101;
 const int SQRT = 350;
 const int LOG = 21;
+const int MOD = 1e9 + 7;
 
 void solve() {
     
@@ -123,7 +124,12 @@ signed main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
-    
+
     dbg(Time);
     return 0;
 }
+
+
+
+
+

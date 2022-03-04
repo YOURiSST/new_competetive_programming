@@ -20,7 +20,7 @@ struct Sparse {
             for (int i = 0; i + (1 << l) < sz(a) + 1; ++i) {
                 s[l][i] = min(s[l - 1][i], s[l - 1][i + (1 << (l - 1))]);
             }
-        }
+        } 
     }  
     
     

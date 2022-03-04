@@ -68,43 +68,7 @@ struct DynamicSQRT {
         }    
     }
     
-    int get_sum(int lq, int rq) {
-        int i = 0; // реальный номер текущего элемента массива
-        int j = 0; // его номер в блоке
-        int block_num = 0; // блок
-        int sum = 0;
-        
-        for (; i < n && i <= rq; ) {
-            if (lq <= i && i <= rq) {
-                if (j == 0 && lq <= i && i + blocks[block_num].size() - 1 <= rq) {
-                    sum += blocks_sum[block_num];
-                    i += blocks[block_num].size();
-                } else {
-                    sum += blocks[block_num][j];
-                    ++i;
-                    ++j;
-                    if (j == blocks[block_num].size()) {
-                        ++block_num;
-                        j = 0;
-                    }
-                }
-            } else {
-                if (j == 0 && i + blocks[block_num].size() - 1 < lq) {
-                    i += blocks[block_num].size();
-                } else {
-                    ++i;
-                    ++j;
-                    if (j == blocks[block_num].size()) {
-                        ++block_num;
-                        j = 0;
-                    }
-                }
-            }
-        }
-        
-        return sum;
-    }
-    
+  
     int get_sum(int lq, int rq) {
         int block_num = 0;
         int i = 0;

@@ -1,0 +1,34 @@
+vi zfunc(int n, string s) {
+    vi z(n);
+    int l = 0, r = 1; // [l, r) , r = l + z[l]
+    for (int i = 1; i < n; ++i) {
+        if (i < r) {
+            z[i] = min(z[i - l], r - i);
+        }
+        while (i + z[i] < n && s[i + z[i]] == s[z[i]]) {
+            ++z[i];
+        }
+        if (i + z[i] > r) {
+            l = i;
+            r = i + z[i];
+        }
+    }
+    return z;
+}
+
+int num_different(int n, string s) {
+    int ans = 1;
+    string cur = "";
+    cur += s.back();
+    int i = sz(s) - 2;
+    while (i >= 0) {
+        cur = s[i--] + cur;
+        vi z = zfunc(sz(cur), cur);
+        int zmax = *max_element(all(z));
+        ans += sz(cur) - zmax;
+    }
+    return ans;
+
+    
+//    int i = s
+}

@@ -14,3 +14,8 @@ int main() {
         i = lower_bound(tmp.begin(), tmp.end(), i) - tmp.begin();
     }
 }
+
+
+////
+
+questions.reserve(20 * 1000 * 1000 + 1);

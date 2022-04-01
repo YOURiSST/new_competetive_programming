@@ -1,7 +1,7 @@
 int n, m;
 vvi g;
 
-int h[MAXN];
+int h[MAXN]
 int hup[MAXN];
 int used[MAXN];
 set<int> articulations;

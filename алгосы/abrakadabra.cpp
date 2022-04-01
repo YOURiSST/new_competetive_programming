@@ -34,7 +34,7 @@
 #define pll pair<long long, long long>
 #define all(a) (a).begin(), (a).end()
 #define rall(a) (a).rbegin(), (a).rend()
-
+#define max max<int>
 #define min min<int>
 #define Time (double)clock() / CLOCKS_PER_SEC
 #define filein(FILE) freopen(FILE, "r", stdin)
@@ -118,104 +118,92 @@ const int SQRT = 350;
 const int LOG = 21;
 const int MOD = 1e9 + 7;
 
-
 struct Matrix {
-    ll sum;
+    int sum;
     int i1, i2, j1, j2;
-    Matrix(ll t1, int t2, int t3, int t4, int t5) {
-        sum = t1;
-        i1 = t2;
-        i2 = t3;
-        j1 = t4;
-        j2 = t5;
+    Matrix(int sum_, int i1_, int i2_, int j1_, int j2_) {
+        sum = sum_;
+        i1 = i1_; i2 = i2_; j1 = j1_; j2 = j2_;
     }
     Matrix() = default;
 };
 
 bool operator < (Matrix a, Matrix b) {
-    if (a.sum != b.sum)
-        return a.sum < b.sum;
-    if (a.i1 == b.i1 && a.i2 == b.i2 && a.j1 == b.j1 && a.j2 == b.j2) {
-        return false;
-    }
-    if (a.i1 != b.i1) {
-        return a.i1 < b.i1;
-    }
-    if (a.i2 != b.i2) {
-        return a.i2 < b.i2;
-    }
-    if (a.j1 != b.j1) {
-        return a.j1 < b.j1;
-    }
-    if (a.j2 != b.j2) {
-        return a.j2 < b.j2;
-    }
+    return a.sum < b.sum;
 }
-
-
-
-
 
 signed main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
+    /*
+    i really wanted to visit a BringMeTheHorizon show 
+    but they've denied their tour in Russia
+    :(( 
+    this is the reason why i need to drown my pain. in olympiad problems.
+    -_-
+    */
+    int total = 0;
     int n, m, p; cin >> n >> m >> p;
     vvi a(n, vi(m));
-    ll total = 0;
     for (auto & i : a) {
-        for (auto & j : i) {
-            cin >> j;
-            total += j;
+        for (auto & o : i) {
+            cin >> o;
+            total += o;
         }
     }
-    dbg(total);
+    set<Matrix> kaif;
+    int CanYouFeelMyHeart = 0;
 
-    vvl n_prefs(n, vl(m + 1));
-    vvl m_prefs(m, vl(n + 1));
-    
+    vvi prefs_n(n, vi(m + 1));
+    vvi prefs_m(m, vi(n + 1));
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
-            n_prefs[i][j + 1] = n_prefs[i][j] + a[i][j];
+            prefs_n[i][j + 1] = prefs_n[i][j] + a[i][j];
         }
     }
-
     for (int j = 0; j < m; ++j) {
         for (int i = 0; i < n; ++i) {
-            m_prefs[j][i + 1] = m_prefs[j][i] + a[i][j];
+            prefs_m[j][i + 1] = prefs_m[j][i] + a[i][j];
         }
     }
+    
+    kaif.emplace(Matrix(total, 0, n - 1, 0, m - 1));
+    dbg(total);
 
     
-    set<Matrix> not_kaif;
-    not_kaif.emplace(Matrix(total, 0, n - 1, 0, m - 1));
-    ll CanYouFeelMyHeart = 0;
-    while (!not_kaif.empty()) {
-        auto m = *prev(not_kaif.end());
+    dbg("do");
+    while (!kaif.empty()) {
+        Matrix m = *(prev(kaif.end()));
+        //dbg(m.sum, m.i1, m.i2, m.j1, m.j2);
         
-        if (m.sum < p) {
+        if (m.sum < p)
             break;
-        }
         if (!(m.sum % p)) {
-            dbg("here");
-            CanYouFeelMyHeart = max<ll>(CanYouFeelMyHeart, m.sum);
+            dbg(m.sum, m.i1, m.i2, m.j1, m.j2);
+            CanYouFeelMyHeart = m.sum;
             break;
         }
+        int i1 = m.i1, i2 = m.i2, j1 = m.j1, j2 = m.j2;
+        if ((prefs_n[i2][j2 + 1] - prefs_n[i2][j1]) < 0) {
+            dbg(i1, j1, i2, j2);
+        }
         
-        Matrix m1 = {m.sum - n_prefs[m.i1][m.j2 + 1] + n_prefs[m.i1][m.j1], m.i1 + 1, m.i2, m.j1, m.j2};
-        Matrix m2 = {m.sum - n_prefs[m.i2][m.j2 + 1] + n_prefs[m.i2][m.j1], m.i1, m.i2 - 1, m.j1, m.j2};
-        Matrix m3 = {m.sum - m_prefs[m.j1][m.i2 + 1] + m_prefs[m.j1][m.i1], m.i1, m.i2, m.j1 + 1, m.j2};
-        Matrix m4 = {m.sum - m_prefs[m.j2][m.i2 + 1] + m_prefs[m.j2][m.i1], m.i1, m.i2, m.j1, m.j2 - 1};
+        Matrix m1 = {m.sum - (prefs_m[j2][i2 + 1] - prefs_m[j2][i1]), i1, i2, j1, j2 - 1};
+        Matrix m2 = {m.sum - (prefs_m[j1][i2 + 1] - prefs_m[j1][i1]), i1, i2, j1 + 1, j2};
+        Matrix m3 = {m.sum - (prefs_n[i1][j2 + 1] - prefs_n[i1][j1]), i1 + 1, i2, j1, j2};
+        Matrix m4 = {m.sum - (prefs_n[i2][j2 + 1] - prefs_n[i2][j1]), i1, i2 - 1, j1, j2};
         if (m1.sum >= p)
-            not_kaif.emplace(m1);
+            kaif.emplace(m1);
         if (m2.sum >= p)
-            not_kaif.emplace(m2);
+            kaif.emplace(m2);
         if (m3.sum >= p)
-            not_kaif.emplace(m3);
+            kaif.emplace(m3);
         if (m4.sum >= p)
-            not_kaif.emplace(m4);
-        not_kaif.erase(prev(not_kaif.end()));
+            kaif.emplace(m4);
+        kaif.erase(prev(kaif.end()));
     }
+
     cout << CanYouFeelMyHeart;
     dbg(Time);
     return 0;

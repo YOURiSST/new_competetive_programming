@@ -1,4 +1,4 @@
-/*\YOURiSST_xD\*/
+/* (¬_¬ ) YOURiSST_xD (╯°□°）╯︵ ┻━┻) */
 #include <iostream>
 #include <string>
 #include <vector>
@@ -14,7 +14,8 @@
 #include <bitset>
 #include <unordered_set>
 #include <unordered_map>
-
+#include <cassert>
+#include <functional>
 
 #define sz(a) ((int)((a).size()))
 #define get(_type, _x) \
@@ -30,10 +31,15 @@
 #define vl vector<long long>
 #define vvi vector<vector<int>>
 #define vvl vector<vector<long long>>
+#define unmap unordered_map
+#define unset unordered_set
 #define pii pair<int, int>
 #define pll pair<long long, long long>
 #define all(a) (a).begin(), (a).end()
 #define rall(a) (a).rbegin(), (a).rend()
+#define max max<int>
+#define min min<int>
+#define EPS 0.000000001
 #define Time (double)clock() / CLOCKS_PER_SEC
 #define filein(FILE) freopen(FILE, "r", stdin)
 #define fileout(FILE) freopen(FILE, "w", stdout)
@@ -66,7 +72,7 @@ ostream &operator<<(ostream &out, const vector<vector<T>> &vec) {
     for (int i = 0; i < vec.size(); ++i) {
         for (int j = 0; j < vec[i].size(); ++j) {
             out << vec[i][j];
-            if (j + 1 != vec.size()) {
+            if (j + 1 != vec[j].size()) {
                 out << " ";
             }
         }
@@ -94,6 +100,23 @@ void _dbg(const char *_s, T _h, Ts... _t) {
 #endif
 
 
+void fastios() {
+
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+#ifdef LOCAL
+    filein("inputf.in");
+    fileout("outputf.out");
+#endif
+
+}
+
+
+
+
+
 int binpow(int a, int n) {
     int result = 1;
     while (n) {
@@ -104,8 +127,27 @@ int binpow(int a, int n) {
     }
     return result;
 }
+ll div_up(ll x, ll y) {
+    return (x - 1) / y + 1;
+}
 
-//#define int long long
+/*
+const int ML = 240;
+char memory[ML << 20];
+size_t ptr_ = 0;
+
+void* operator new(size_t how_much) {
+    ptr_ += how_much;
+    assert(ptr_ < ML * 1024 * 1024);
+    return memory + ptr_ - how_much;
+}
+
+void operator delete(void*) { }
+*/
+
+
+
+#define int long long
 int const INF = 2 * 1e9;
 ll const LINF = 1e18;
 const int MAXN = 4 * 100 * 1001; // 1e5 + 0
@@ -117,19 +159,14 @@ const int LOG = 21;
 const int MOD = 1e9 + 7;
 
 void solve() {
-    
+
+
 }
 
 signed main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
+    fastios();
 
     dbg(Time);
     return 0;
 }
-
-
-
-
 

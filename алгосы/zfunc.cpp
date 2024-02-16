@@ -1,4 +1,5 @@
-vi zfunc(int n, string s) {
+std::vector<int> zfunc(std::string& s) {
+    int n = s.size();
     vi z(n);
     int l = 0, r = 1; // [l, r) , r = l + z[l]
     for (int i = 1; i < n; ++i) {
@@ -16,19 +17,18 @@ vi zfunc(int n, string s) {
     return z;
 }
 
-int num_different(int n, string s) {
+int num_different(std::string s) {
+    int n = s.size();
     int ans = 1;
     string cur = "";
     cur += s.back();
-    int i = sz(s) - 2;
+    int i = s.size() - 2;
     while (i >= 0) {
         cur = s[i--] + cur;
-        vi z = zfunc(sz(cur), cur);
+        vi z = zfunc(cur);
         int zmax = *max_element(all(z));
         ans += sz(cur) - zmax;
     }
-    return ans;
-
-    
+    return ans;    
 //    int i = s
 }

@@ -28,7 +28,7 @@ vector<int> eratosphene_smart(int n) {
                 }
             }
         }
-    }
+    }2
     
     return res;
 }

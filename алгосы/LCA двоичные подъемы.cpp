@@ -1,71 +1,74 @@
-struct Edge {
-    int u, v;
-    Edge(int u_, int v_) : u(u_), v(v_) {}  
-};
+class TreeWithLCA {
+ private:
+  static const int LOG = 21;
 
+  int num_vert;
+  int timer;
+  int root;
 
-struct TreeWithLCA {
-    int n, t; 
-    vector<vi> g;
-    vi tin, tout, h, p;
-    vector<vi> bin_p; 
-    
-    void DFS(int v, int pr) {
-        p[v] = pr;
-        tin[v] = t++;
-        h[v] = (pr == v ? 0 : h[pr] + 1);
-        bin_p[v][0] = p[v];
-        for (int i = 1; i < LOG; ++i) {
-            bin_p[v][i] = bin_p[bin_p[v][i - 1]][i - 1];
-        }
-        
-        for (auto & to : g[v]) {
-            if (to != pr) {
-                DFS(to, v);
-            }
-        }
-        
-        tout[v] = t++;
+  std::vector<std::vector<int>> adj_list;
+  std::vector<int> time_in;
+  std::vector<int> time_out;
+  std::vector<int> height;
+  std::vector<int> pred;
+  std::vector<std::vector<int>> bin_pred;
+
+  void DFS(int vert, int cur_pred) {
+    pred[vert] = cur_pred;
+    time_in[vert] = timer++;
+    height[vert] = (pred[vert] == vert ? 0 : height[cur_pred] + 1);
+    bin_pred[vert][0] = pred[vert];
+    for (int power = 1; power < LOG; ++power) {
+      bin_pred[vert][power] = bin_pred[bin_pred[vert][power - 1]][power - 1];
     }
-    
-    
-    TreeWithLCA(int n_, const vector<Edge>& edges) {
-        //ресайзы юра блин
-        n = n_;
-        g.resize(n);
-        tin.resize(n);
-        tout.resize(n);
-        h.resize(n);
-        p.resize(n);
-        bin_p.resize(n, vi (LOG));
-        for (auto [u, v] : edges) {
-            g[u].eb(v);
-            g[v].eb(u);
-        }
-        t = 0;
-        DFS(0, 0);
-    } 
-    
-    bool is_ancestor(int u, int v) { 
-        return tin[u] <= tin[v] && tout[u] >= tout[v];	
+
+    for (auto& to : adj_list[vert]) {
+      if (to != cur_pred) {
+        DFS(to, vert);
+      }
     }
-    
-    int LCA (int u, int v) {
-        if (is_ancestor(u, v)) {
-        	return u;
-        }
-        if (is_ancestor(v, u)) {
-        	return v;
-        }
-        
-        for (int l = LOG - 1; l >= 0; --l) {
-            if (!is_ancestor(bin_p[u][l], v)) {
-                u = bin_p[u][l];
-            }
-        }
-        
-        // u – это pre-LCA
-        return p[u];
+
+    time_out[vert] = timer++;
+  }
+
+ public:
+  TreeWithLCA(int num_vert, const std::vector<Edge>& edges, int root = 0)
+      : num_vert(num_vert), root(root) {
+    adj_list.resize(num_vert);
+    time_in.resize(num_vert);
+    time_out.resize(num_vert);
+    height.resize(num_vert);
+    pred.resize(num_vert);
+    bin_pred.resize(num_vert, std::vector<int>(LOG));
+
+    for (auto& [from, to] : edges) {
+      adj_list[from].emplace_back(to);
+      adj_list[to].emplace_back(from);
     }
-    
+
+    timer = 0;
+    DFS(root, root);
+  }
+  int GetHeight(int vertex) {
+    return height[vertex];
+  }
+
+  bool IsAncestor(int ft_vert, int sc_vert) {
+    return time_in[ft_vert] <= time_in[sc_vert] && time_out[ft_vert] >= time_out[sc_vert];
+  }
+
+  int LCA(int ft_vert, int sc_vert) {
+    if (IsAncestor(ft_vert, sc_vert)) {
+      return ft_vert;
+    }
+    if (IsAncestor(sc_vert, ft_vert)) {
+      return sc_vert;
+    }
+    for (int power = LOG - 1; power >= 0; --power) {
+      if (!IsAncestor(bin_pred[ft_vert][power], sc_vert)) {
+        ft_vert = bin_pred[ft_vert][power];
+      }
+    }
+    return pred[ft_vert];
+  }
 };
